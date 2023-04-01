@@ -1,0 +1,21 @@
+.father{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to top, #301C41,#48315c,#301C41);
+}
+
+.Child{
+    background: linear-gradient(to top, rgb(164, 164, 241), rgba(100, 115, 253, 0.479));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 50%;
+    border-radius: 30px;
+}
+
+.inputs{
+    margin: 20%;
+    margin-bottom: 10px;
+}
