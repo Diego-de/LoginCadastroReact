@@ -3,6 +3,7 @@ package com.project.login.autentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,8 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
         http.authorizeRequests()
-            .antMatchers("/users/authenticate").permitAll()
-            .antMatchers("/users/create").permitAll()
+            .antMatchers("/users/**").permitAll()
+            .antMatchers("/users/auth").permitAll()
+            .antMatchers(HttpMethod.POST, "/users/auth").permitAll()
+            .antMatchers("/users/signup").permitAll()
             .antMatchers("/h2-console/**").permitAll()
             .anyRequest().authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
