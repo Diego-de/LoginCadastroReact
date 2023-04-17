@@ -51,7 +51,7 @@ function Cadastro() {
 
     if (emailEhValido && passwordEhValido) {
 
-      axios.post("http://localhost:8080/users/create", {
+      axios.post("http://localhost:8080/api/cadastrar", {
         email: dataUser.email,
         password: dataUser.password
       })
