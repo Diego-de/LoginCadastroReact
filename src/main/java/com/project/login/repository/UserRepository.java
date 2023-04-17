@@ -9,6 +9,6 @@ import com.project.login.domain.User;
 
 public interface UserRepository extends JpaRepository<User,Long> {
 
-    User findByEmail(String email);
-
+    User save(User user);
+    Optional<User> findByEmail(String email);
 }

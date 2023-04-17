@@ -38,4 +38,13 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public static User createMember(String email, String password) {
+        return new User(email,password);
+    }
+
 }
