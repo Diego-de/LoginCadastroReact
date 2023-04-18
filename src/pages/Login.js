@@ -1,9 +1,10 @@
 import { Container, TextField, Typography, Button } from '@material-ui/core';
 import './LoginCadastro.css'
 import axios from "axios";
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import sun from './assets/earth.mp4'
 
 function Login() {
   const navigate = useNavigate()
@@ -13,23 +14,23 @@ function Login() {
     email: '',
     password: ''
   });
- 
+
 
   const fazerLogin = async (e) => {
 
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:8080/logar", {
-      email: dataUser.email,
-      password: dataUser.password
-    });
-    const token = response.data.token;
-    setToken(token);
-    navigate("./Logado")
-  } catch (error) {
-    console.error(error);
-  } 
-   
+        email: dataUser.email,
+        password: dataUser.password
+      });
+      const token = response.data.token;
+      setToken(token);
+      navigate("./Logado")
+    } catch (error) {
+      console.error(error);
+    }
+
   }
 
 
@@ -37,6 +38,11 @@ function Login() {
 
   return (
     <div className='father'>
+      <div className="background">
+        <video autoPlay loop muted>
+          <source src={sun} type="video/mp4" />
+        </video>
+      </div>
       <Container maxWidth="xs" className='Child'>
         <Typography variant="h4" style={{ marginTop: "7%", color: "#53F5EA" }}>Login</Typography>
         <div className='inputs'>
@@ -58,8 +64,8 @@ function Login() {
           <Button variant="contained" id='Lgin' style={{ width: "220px", marginBottom: "20%" }} onClick={fazerLogin} color="primary">Login</Button>
         </div>
 
-        <div style={{ borderBottom: "solid 1px" }}>
-          <Button variant="body1" href="./Cadastro" style={{ color: "#1C0B2B" }} >Cadastrar-se</Button>
+        <div className='Btn'>
+          <Button variant="body1" href="./Cadastro" className='btn' >Cadastre-se</Button>
         </div>
 
       </Container>

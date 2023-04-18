@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import './LoginCadastro.css'
 import validator from 'email-validator';
 import axios from "axios";
+import sun from './assets/earth.mp4'
+
+
+
 
 function Cadastro() {
 
@@ -69,6 +73,11 @@ function Cadastro() {
 
   return (
     <div className='father'>
+      <div className="background">
+        <video autoPlay loop muted>
+          <source src={sun} type="video/mp4" />
+        </video>
+      </div>
       <Container maxWidth="xs" className='Child'>
         <Typography variant="h4" style={{ marginTop: "7%", color: "#53F5EA" }}>Cadastre-se</Typography>
         <div className='inputs'>
@@ -98,8 +107,8 @@ function Cadastro() {
           <Button variant="contained" style={{ width: "220px", marginBottom: "20%" }} color="primary" onClick={salvarDados}>Login</Button>
         </div>
 
-        <div style={{ borderBottom: "solid 1px" }}>
-          <Button variant="body1" href="./" style={{ color: "#1C0B2B" }}>Login</Button>
+        <div className='Btn'>
+          <Button variant="body1" href="./" className='btn'>Login</Button>
         </div>
 
       </Container>

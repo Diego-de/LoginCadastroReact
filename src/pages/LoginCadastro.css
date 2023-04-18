@@ -3,11 +3,38 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background: linear-gradient(to top, #301C41,#48315c,#301C41);
 }
 
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+  }
+  
+  .background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+  }
+  
+  @keyframes moveBackground {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.2);
+    }
+  }
+
 .Child{
-    background: linear-gradient(to top, rgb(164, 164, 241), rgba(100, 115, 253, 0.479));
+    background: linear-gradient(to top, rgb(65, 65, 223), rgba(219, 33, 8, 0.507));
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -18,4 +45,11 @@
 .inputs{
     margin: 20%;
     margin-bottom: 10px;
+}
+
+
+.Btn .btn{
+    color: antiquewhite;
+    border: double rgba(219, 33, 8, 0.541) 1px;
+
 }
