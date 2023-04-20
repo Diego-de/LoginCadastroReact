@@ -1,4 +1,5 @@
 import { Container, TextField, Typography, Button } from '@material-ui/core';
+import { Alert, Stack } from '@mui/material/';
 import React, { useState } from "react";
 import './LoginCadastro.css'
 import validator from 'email-validator';
@@ -12,7 +13,7 @@ function Cadastro() {
 
   const [emailValido, setEmailValido] = useState(true);
   const [passwordValido, setPasswordValido] = useState(true);
-
+  const [alert, setAlert] = useState(null);
 
   const [dataUser, SetDataUser] = useState({
     email: '',
@@ -34,7 +35,7 @@ function Cadastro() {
 
 
 
-  const salvarDados = () => {
+  const salvarDados = (event) => {
 
     const emailEhValido = isEmailValid(dataUser.email);
     const passwordEhValido = isPasswordValid(dataUser.password);
@@ -54,17 +55,27 @@ function Cadastro() {
 
 
     if (emailEhValido && passwordEhValido) {
-
-      axios.post("http://localhost:8080/api/cadastrar", {
-        email: dataUser.email,
-        password: dataUser.password
-      })
-        .then((response) => setUser(response.data))
-        .catch((err) => {
-          console.error("ops! ocorreu um erro" + err);
+      event.preventDefault();
+      axios
+        .post("http://localhost:8080/api/cadastrar", {
+          email: dataUser.email,
+          password: dataUser.password,
+        })
+        .then((response) => {
+          setAlert({ type: "success", message: "Cadastro Bem Sucedido" });
+          setUser(response.data);
+        })
+        .catch((error) => {
+          if (error.response && error.response.data === "E-mail já cadastrado") {
+            // email já existe, exibe mensagem de erro para o usuário
+            setAlert({ type: "error", message: "Email já cadastrado" });
+          } else {
+            // erro genérico, exibe mensagem de erro genérica
+            setAlert({type: "error", message: "Ocorreu um erro ao fazer Cadastro, tente novamente mais tarde" });
+          }
         });
-
     }
+
 
   }
 
@@ -104,16 +115,22 @@ function Cadastro() {
 
         </div>
         <div>
-          <Button variant="contained" style={{ width: "220px", marginBottom: "20%" }} color="primary" onClick={salvarDados}>Login</Button>
+          <Button variant="contained" style={{ width: "220px", marginBottom: "20%" }} color="primary" onClick={salvarDados}>Confirmar</Button>
         </div>
 
-        <div className='Btn'>
+        <div className='Btn' >
           <Button variant="body1" href="./" className='btn'>Login</Button>
         </div>
-
+        <div style={{ marginBottom: "5%" }}>
+          {alert &&
+            <Stack sx={{ width: '100%' }} spacing={2}>
+              <Alert severity={alert.type}>{alert.message}</Alert>
+            </Stack>
+          }
+        </div>
       </Container>
     </div>
   );
 }
 
-export default Cadastro;
+export default Cadastro; 

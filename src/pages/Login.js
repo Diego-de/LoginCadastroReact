@@ -5,10 +5,18 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import sun from './assets/earth.mp4'
+import { Alert, Stack } from '@mui/material/';
 
 function Login() {
+
+
   const navigate = useNavigate()
   const { setToken } = useContext(AuthContext);
+  const [alert, setAlert] = useState(null);
+
+
+
+
 
   const [dataUser, SetDataUser] = useState({
     email: '',
@@ -27,8 +35,17 @@ function Login() {
       const token = response.data.token;
       setToken(token);
       navigate("./Logado")
+      setAlert({ type: "success", message: "Confirmado" });
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      if (error.response && error.response?.status === 401) {
+        // email já existe, exibe mensagem de erro para o usuário
+        setAlert({ type: "error", message: "E-mail ou senha incorretos ou nao Cadastrado!" });
+      } else {
+        // erro genérico, exibe mensagem de erro genérica
+        console.log(error)
+        setAlert({type: "error", message: "Ocorreu um erro ao fazer login, tente novamente mais tarde"});
+      }
     }
 
   }
@@ -67,7 +84,13 @@ function Login() {
         <div className='Btn'>
           <Button variant="body1" href="./Cadastro" className='btn' >Cadastre-se</Button>
         </div>
-
+        <div style={{ marginBottom: "5%" }}>
+          {alert &&
+            <Stack sx={{ width: '100%' }} spacing={2}>
+              <Alert severity={alert.type}>{alert.message}</Alert>
+            </Stack>
+          }
+        </div>
       </Container>
     </div>
   );
