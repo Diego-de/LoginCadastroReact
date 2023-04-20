@@ -1,5 +1,6 @@
 package com.project.login.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,9 +26,15 @@ public class UserController {
 
     // Endpoint para registro de usuário
     @PostMapping("/api/cadastrar")
-    public String saveMember(@RequestBody MemberDto memberDto) {
+    public ResponseEntity<String> saveMember(@RequestBody MemberDto memberDto) {
+        
+        if (memberRepository.findByEmail(memberDto.getEmail()).isPresent()) {
+            // retorna uma resposta com um erro indicando que o e-mail já está sendo usado
+            return ResponseEntity.badRequest().body("E-mail já cadastrado");
+        }
+        
         memberRepository.save(User.createMember(memberDto.getEmail(), encode.encode(memberDto.getPassword())));
-        return "success";
+        return ResponseEntity.ok("Usuário cadastrado com sucesso");
     }
 
 
